@@ -8,5 +8,4 @@ public interface DatabaseRepository<T,U>{
 	T findById(U id);
 	int deleteById(U id);
 	List<T> findAll();
-	int deleteAll();
 }
