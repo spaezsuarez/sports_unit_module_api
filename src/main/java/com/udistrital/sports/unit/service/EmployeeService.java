@@ -14,5 +14,7 @@ public interface EmployeeService {
 	APIResponseDTO<List<EmployeeDTO>> getEmployees();
 	APIResponseDTO<EmployeeDTO> getEmployee(Integer idUser);
 	APIResponseDTO<EmployeeModel> registerEmployee(EmployeeDTO request);
+	APIResponseDTO<EmployeeModel> updateEmployee(Integer userId, EmployeeDTO request);
+	APIResponseDTO<Integer> deleteEmployee(Integer idUser);
 
 }

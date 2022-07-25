@@ -10,9 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +60,30 @@ public class RoleController {
 			return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 		}
 		response = RoleService.registerRole(request);
+		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
+	}
+
+	@PutMapping(value = "/{idRole}",produces = {"application/json"})
+	public ResponseEntity<RoleModel> updateRoleInformation(
+		@PathVariable("idRole") Integer idCampus,
+		@RequestBody RoleModel request,
+		BindingResult result
+	){
+		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
+		if(result.hasErrors()){
+			response.setFailRequest();
+			return new ResponseEntity<RoleModel>(response.getData(), Util.findHttpStatusResponse(response));
+		}
+		response = RoleService.updateRole(idCampus, request);
+		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
+	}
+
+	@DeleteMapping(value = "/{idRole}")
+	public ResponseEntity<Integer> deleteCampus(
+		@PathVariable("idRole") Integer idCampus
+	){
+		APIResponseDTO<Integer> response = new APIResponseDTO<>();
+		response = RoleService.deleteRole(idCampus);
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 

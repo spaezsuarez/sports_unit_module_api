@@ -120,5 +120,67 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.info("Response: "+response.toString());
 		return response;
 	}
+
+	@Override
+	public APIResponseDTO<EmployeeModel> updateEmployee(Integer idRole, EmployeeDTO request) {
+		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
+		log.info("Inicia creación del role con id: " + idRole);
+		try {
+			request.setIdRole(idRole);
+			EmployeeModel dataEmployee = new EmployeeModel(request);
+			int databaseResponse = this.employeeRepository.update(dataEmployee);
+			if(databaseResponse != 1) {
+				response.setFailQuery();
+				response.setMessage("No se pudo actualizar la información");
+			}
+
+			databaseResponse = this.userRepository.update(new UserModel(request));
+
+			if(databaseResponse != 1) {
+				response.setFailQuery();
+				response.setMessage("No se pudo actualizar la información");
+			} else {
+				response.setSuccesQuery(dataEmployee);
+				response.setMessage("Role actualizado en el sistema");
+			}
+		}catch(Exception e) {
+			log.error("Error del sistema a la hora de actualizar el role: " + idRole);
+			log.error(e.toString());
+			response.setFailService();
+		}
+		log.info("Response: "+response.toString());
+		return response;
+	}
+
+	@Override
+	public APIResponseDTO<Integer> deleteEmployee(Integer idUser) {
+		APIResponseDTO<Integer> response = new APIResponseDTO<>();
+		try {
+			int dataResponse = this.employeeRepository.delete(idUser);
+
+			if(dataResponse != 1) {
+				log.info("No se pudo eliminar el empleado "+idUser);
+				response.setFailQuery();
+				response.setMessage("No se pudo eliminar el rol");
+			}
+
+			dataResponse = this.userRepository.delete(idUser);
+
+			if(dataResponse != 1) {
+				log.info("No se pudo eliminar el usuario "+idUser);
+				response.setFailQuery();
+				response.setMessage("No se pudo eliminar el usuario");
+			} else {
+				log.info("Empleado eliminado con éxito " + idUser);
+				response.setSuccesQuery(dataResponse);
+			}
+		} catch(Exception e) {
+			log.error("Error eliminando el rol" + idUser);
+			log.error(e.toString());
+			response.setFailService();
+		}
+
+		return response;
+	}
 	
 }

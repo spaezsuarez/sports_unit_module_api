@@ -25,7 +25,7 @@ public class EmployeeRepository implements DatabaseRepository<EmployeeModel, Int
 	@Override
 	public int update(EmployeeModel data) {
 		return this.jdbcTemplate.update(
-				"UPDATE \"SPORTSUNIT\".\"EMPLOYEE\" SET IDROLE=?, WHERE IDUSER=?",
+				"UPDATE \"SPORTSUNIT\".\"EMPLOYEE\" SET IDROLE=? WHERE IDUSER=?",
 				new Object[] { data.getIdRole(), data.getIdUser() }
 		);
 	}

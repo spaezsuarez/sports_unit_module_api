@@ -10,9 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,6 +61,30 @@ public class EmployeeController {
 			return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 		}
 		response = employeeService.registerEmployee(request);
+		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
+	}
+
+	@PutMapping(value = "/{idUser}",produces = {"application/json"})
+	public ResponseEntity<EmployeeModel> updateUserInformation(
+		@PathVariable("idUser") Integer idUser,
+		@RequestBody EmployeeDTO request,
+		BindingResult result
+	){
+		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
+		if(result.hasErrors()){
+			response.setFailRequest();
+			return new ResponseEntity<EmployeeModel>(response.getData(), Util.findHttpStatusResponse(response));
+		}
+		response = employeeService.updateEmployee(idUser, request);
+		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
+	}
+
+	@DeleteMapping(value = "/{idUser}")
+	public ResponseEntity<Integer> deleteUser(
+		@PathVariable("idUser") Integer idUSer
+	){
+		APIResponseDTO<Integer> response = new APIResponseDTO<>();
+		response = employeeService.deleteEmployee(idUSer);
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 

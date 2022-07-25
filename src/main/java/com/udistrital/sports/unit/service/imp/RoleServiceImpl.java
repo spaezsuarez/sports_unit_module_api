@@ -110,7 +110,24 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public APIResponseDTO<Integer> deleteRole(Integer idRole) {
-		// TODO Auto-generated method stub
-		return null;
+		APIResponseDTO<Integer> response = new APIResponseDTO<>();
+		try {
+			int dataResponse = this.roleRepository.delete(idRole);
+
+			if(dataResponse != 1) {
+				log.info("No se pudo eliminar el rol "+idRole);
+				response.setFailQuery();
+				response.setMessage("No se pudo eliminar el rol");
+			} else {
+				log.info("Rol eliminado con éxito " + idRole);
+				response.setSuccesQuery(dataResponse);
+			}
+		} catch(Exception e) {
+			log.error("Error eliminando el rol" + idRole);
+			log.error(e.toString());
+			response.setFailService();
+		}
+
+		return response;
 	}
 }

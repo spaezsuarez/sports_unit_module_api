@@ -25,7 +25,7 @@ public class UserRepository implements DatabaseRepository<UserModel,Integer> {
     @Override
     public int update(UserModel data) {
         return this.jdbcTemplate.update(
-				"UPDATE \"SPORTSUNIT\".\"SPORTSUNIT\" SET IDCAMPUS=?,NAMEUSER=? WHERE IDUSER=?",
+				"UPDATE \"SPORTSUNIT\".\"USER\" SET IDCAMPUS=?, NAMEUSER=? WHERE IDUSER=?",
 				new Object[] { data.getIdCampus(),data.getNameUser(), data.getIdUser() }
 		);
     }
