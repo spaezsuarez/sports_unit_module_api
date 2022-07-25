@@ -13,5 +13,6 @@ public interface RoleService {
 	APIResponseDTO<List<RoleModel>> getRoles();
 	APIResponseDTO<RoleModel> getRole(Integer idRole);
 	APIResponseDTO<RoleModel> registerRole(RoleModel request);
-
+	APIResponseDTO<RoleModel> updateRole(Integer idRole,RoleModel request);
+	APIResponseDTO<Integer> deleteRole(Integer idRole);
 }

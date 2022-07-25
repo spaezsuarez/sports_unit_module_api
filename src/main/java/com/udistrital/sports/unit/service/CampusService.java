@@ -13,5 +13,6 @@ public interface CampusService {
 	APIResponseDTO<List<CampusModel>> getCampuses();
 	APIResponseDTO<CampusModel> getCampus(Integer idCampus);
 	APIResponseDTO<CampusModel> registerCampus(CampusModel request);
-
+	APIResponseDTO<CampusModel> updateCampus(Integer idCampus,CampusModel request);
+	APIResponseDTO<Integer> deleteCampus(Integer idCampus);	
 }

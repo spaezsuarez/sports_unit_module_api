@@ -10,9 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,6 +62,30 @@ public class CampusController {
 			return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 		}
 		response = campusService.registerCampus(request);
+		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
+	}
+
+	@PutMapping(value = "/{idCampus}",produces = {"application/json"})
+	public ResponseEntity<CampusModel> updateCampusInformation(
+		@PathVariable("idCampus") Integer idCampus,
+		@RequestBody CampusModel request,
+		BindingResult result
+	){
+		APIResponseDTO<CampusModel> response = new APIResponseDTO<>();
+		if(result.hasErrors()){
+			response.setFailRequest();
+			return new ResponseEntity<CampusModel>(response.getData(), Util.findHttpStatusResponse(response));
+		}
+		response = campusService.updateCampus(idCampus, request);
+		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
+	}
+
+	@DeleteMapping(value = "/{idCampus}")
+	public ResponseEntity<Integer> deleteCampus(
+		@PathVariable("idCampus") Integer idCampus
+	){
+		APIResponseDTO<Integer> response = new APIResponseDTO<>();
+		response = campusService.deleteCampus(idCampus);
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 

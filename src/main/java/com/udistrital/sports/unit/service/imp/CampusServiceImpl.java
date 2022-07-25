@@ -22,7 +22,7 @@ public class CampusServiceImpl implements CampusService {
 	@Override
 	public APIResponseDTO<List<CampusModel>> getCampuses() {
 		APIResponseDTO<List<CampusModel>> response = new APIResponseDTO<>();
-		log.info("Inicia Busqueda de empleados en el sistema");
+		log.info("Inicia Busqueda de sedes en el sistema");
 		try {
 			List<CampusModel> data = this.campusRespository.findAll();
 			if(Objects.nonNull(data)) {
@@ -44,7 +44,7 @@ public class CampusServiceImpl implements CampusService {
 	@Override
 	public APIResponseDTO<CampusModel> getCampus(Integer idCampus) {
 		APIResponseDTO<CampusModel> response = new APIResponseDTO<>();
-		log.info("Inicia Busqueda del empleado: " + idCampus);
+		log.info("Inicia Busqueda de la sede: " + idCampus);
 		try {
 			CampusModel data = this.campusRespository.findById(idCampus);
 			if(Objects.nonNull(data)) {
@@ -53,7 +53,7 @@ public class CampusServiceImpl implements CampusService {
 				response.setFailQuery();
 			}
 		}catch(Exception e) {
-			log.error("Error buscando al empleado:" + idCampus + " en el sistema");
+			log.error("Error buscando la sede:" + idCampus + " en el sistema");
 			log.error(e.toString());
 			response.setFailQuery();
 		}
@@ -64,8 +64,8 @@ public class CampusServiceImpl implements CampusService {
 	@Override
 	public APIResponseDTO<CampusModel> registerCampus(CampusModel request) {
 		APIResponseDTO<CampusModel> response = new APIResponseDTO<>();
-		Integer idEmployee = request.getIdCampus();
-		log.info("Inicia Busqueda del empleado: " + idEmployee);
+		Integer idCampus = request.getIdCampus();
+		log.info("Inicia creacion de la sede: " + idCampus);
 		try {
 			int databaseResponse = this.campusRespository.save(request);
 			if(databaseResponse != 1) {
@@ -76,11 +76,56 @@ public class CampusServiceImpl implements CampusService {
 				response.setMessage("Empleado registrado en el sistema");
 			}
 		}catch(Exception e) {
-			log.error("Error buscando al empleado:" + idEmployee + " en el sistema");
+			log.error("Error buscando al empleado:" + idCampus + " en el sistema");
 			log.error(e.toString());
 			response.setFailService();
 		}
 		log.info("Response: " + response.toString());
+		return response;
+	}
+
+	@Override
+	public APIResponseDTO<CampusModel> updateCampus(Integer idCampus, CampusModel request) {
+		APIResponseDTO<CampusModel> response = new APIResponseDTO<>();
+		try{
+			log.info("Inicia actualizacion de datos para la sede " + idCampus);
+			request.setIdCampus(idCampus);
+			int dataResponse = this.campusRespository.update(request);
+			if(dataResponse != 1){
+				log.info("No se pudo actualizar la informacion de la sede "+idCampus);
+				response.setFailQuery();
+				response.setMessage("No se pudo actualizar la informacion de la sede");
+			}else{
+				log.info("Informacion actualizada");
+				response.setSuccesQuery(request);
+			}
+		}catch(Exception e){
+			log.error("Error buscando al empleado:" + idCampus + " en el sistema");
+			log.error(e.toString());
+			response.setFailService();
+		}
+		log.info("Response: " + response.toString());
+		return response;
+	}
+
+	@Override
+	public APIResponseDTO<Integer> deleteCampus(Integer idCampus) {
+		APIResponseDTO<Integer> response = new APIResponseDTO<>();
+		try{
+			int dataResponse = this.campusRespository.delete(idCampus);
+			if(dataResponse != 1){
+				log.info("No se pudo eliminar la sede "+idCampus);
+				response.setFailQuery();
+				response.setMessage("No se pudo actualizar la informacion de la sede");
+			}else{
+				log.info("Sede eliminada correctamente " + idCampus);
+				response.setSuccesQuery(dataResponse);
+			}
+		}catch(Exception e){
+			log.error("Error eliminando sede " +idCampus);
+			log.error(e.toString());
+			response.setFailService();
+		}
 		return response;
 	}
 	

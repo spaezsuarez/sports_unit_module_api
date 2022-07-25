@@ -84,4 +84,33 @@ public class RoleServiceImpl implements RoleService {
 		log.info("Response: "+response.toString());
 		return response;
 	}
+
+	@Override
+	public APIResponseDTO<RoleModel> updateRole(Integer idRole, RoleModel request) {
+		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
+		log.info("Inicia creación del role con id: " + idRole);
+		try {
+			request.setIdRole(idRole);
+			int databaseResponse = this.roleRepository.update(request);
+			if(databaseResponse != 1) {
+				response.setFailQuery();
+				response.setMessage("No se pudo actualizar la información");
+			}else {
+				response.setSuccesQuery(request);
+				response.setMessage("Role actualizado en el sistema");
+			}
+		}catch(Exception e) {
+			log.error("Error del sistema a la hora de actualizar el role: " + idRole);
+			log.error(e.toString());
+			response.setFailService();
+		}
+		log.info("Response: "+response.toString());
+		return response;
+	}
+
+	@Override
+	public APIResponseDTO<Integer> deleteRole(Integer idRole) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
