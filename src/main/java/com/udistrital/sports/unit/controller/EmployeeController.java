@@ -11,13 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udistrital.sports.unit.dto.APIResponseDTO;
-import com.udistrital.sports.unit.dto.employee.ConsultEmployeeDataRequestDTO;
+import com.udistrital.sports.unit.dto.employee.EmployeeDTO;
 import com.udistrital.sports.unit.model.EmployeeModel;
 import com.udistrital.sports.unit.service.EmployeeService;
 import com.udistrital.sports.unit.util.Util;
@@ -30,9 +31,9 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	@GetMapping(value="/all",produces = {"application/json"})
-	public ResponseEntity<List<EmployeeModel>> getAllUsers(){
-		APIResponseDTO<List<EmployeeModel>> response = new APIResponseDTO<>();
+	@GetMapping(value="/",produces = {"application/json"})
+	public ResponseEntity<List<EmployeeDTO>> getAllUsers(){
+		APIResponseDTO<List<EmployeeDTO>> response = new APIResponseDTO<>();
 		response = employeeService.getEmployees();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("X-Total-Count", String.valueOf((Objects.nonNull(response.getData()))?response.getData().size():0));
@@ -41,22 +42,16 @@ public class EmployeeController {
                  .body(response.getData());
 	}
 	
-	@GetMapping(value="/get",produces = {"application/json"})
-	public ResponseEntity<EmployeeModel> getUser(
-			@Valid @RequestBody ConsultEmployeeDataRequestDTO request,
-			BindingResult result){
-		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
-		if(result.hasErrors()) {
-			response.setFailRequest();
-			return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
-		}
-		response = employeeService.getEmployee(request);
+	@GetMapping(value="/{idUser}",produces = {"application/json"})
+	public ResponseEntity<EmployeeDTO> getUser(@PathVariable("idUser") Integer idUser){
+		APIResponseDTO<EmployeeDTO> response = new APIResponseDTO<>();
+		response = employeeService.getEmployee(idUser);
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 
-	@PostMapping(value="/register",produces = {"application/json"})
+	@PostMapping(value="/",consumes = {"application/json"},produces = {"application/json"})
 	public ResponseEntity<EmployeeModel> registerUser(
-			@Valid @RequestBody EmployeeModel request,
+			@Valid @RequestBody EmployeeDTO request,
 			BindingResult result){
 		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
 		if(result.hasErrors()) {

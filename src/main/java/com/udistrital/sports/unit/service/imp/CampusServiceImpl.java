@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.udistrital.sports.unit.dto.APIResponseDTO;
-import com.udistrital.sports.unit.dto.campus.ConsultCampusDataRequestDTO;
 import com.udistrital.sports.unit.model.CampusModel;
 import com.udistrital.sports.unit.repository.CampusRepository;
 import com.udistrital.sports.unit.service.CampusService;
@@ -38,6 +37,7 @@ public class CampusServiceImpl implements CampusService {
 			log.error(e.toString());
 			response.setFailService();
 		}
+		log.info("Response: " + response.toString());
 		return response;
 	}
 
@@ -57,6 +57,7 @@ public class CampusServiceImpl implements CampusService {
 			log.error(e.toString());
 			response.setFailQuery();
 		}
+		log.info("Response: " + response.toString());
 		return response;
 	}
 
@@ -79,6 +80,7 @@ public class CampusServiceImpl implements CampusService {
 			log.error(e.toString());
 			response.setFailService();
 		}
+		log.info("Response: " + response.toString());
 		return response;
 	}
 	

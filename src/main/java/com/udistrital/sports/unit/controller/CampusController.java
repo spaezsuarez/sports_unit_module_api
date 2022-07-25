@@ -51,7 +51,7 @@ public class CampusController {
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 
-	@PostMapping(value="/",produces = {"application/json"})
+	@PostMapping(value="/",consumes={"application/json"},produces = {"application/json"})
 	public ResponseEntity<CampusModel> registerCampus(
 			@Valid @RequestBody CampusModel request,
 			BindingResult result){

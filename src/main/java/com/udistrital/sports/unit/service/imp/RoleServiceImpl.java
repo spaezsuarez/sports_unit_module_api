@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.udistrital.sports.unit.dto.APIResponseDTO;
-import com.udistrital.sports.unit.dto.role.ConsultRoleDataRequestDTO;
 import com.udistrital.sports.unit.model.RoleModel;
 import com.udistrital.sports.unit.repository.RoleRepository;
 import com.udistrital.sports.unit.service.RoleService;
@@ -39,49 +38,50 @@ public class RoleServiceImpl implements RoleService {
 			log.error(e.toString());
 			response.setFailService();
 		}
+		log.info("Response: "+response.toString());
 		return response;
 	}
 
 	@Override
-	public APIResponseDTO<RoleModel> getRole(ConsultRoleDataRequestDTO request) {
+	public APIResponseDTO<RoleModel> getRole(Integer idRole) {
 		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
-		Integer idEmployee = request.getIdRole();
-		log.info("Inicia Busqueda del empleado: " + idEmployee);
+		log.info("Inicia Busqueda del role: " + idRole);
 		try {
-			RoleModel data = this.roleRepository.findById(idEmployee);
+			RoleModel data = this.roleRepository.findById(idRole);
 			if(Objects.nonNull(data)) {
 				response.setSuccesQuery(data);
 			}else {
 				response.setFailQuery();
 			}
 		}catch(Exception e) {
-			log.error("Error buscando al empleado:" + idEmployee + " en el sistema");
+			log.error("Error buscando el role: " + idRole + " en el sistema");
 			log.error(e.toString());
 			response.setFailQuery();
 		}
+		log.info("Response: "+response.toString());
 		return response;
 	}
 
 	@Override
 	public APIResponseDTO<RoleModel> registerRole(RoleModel request) {
 		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
-		Integer idEmployee = request.getIdRole();
-		log.info("Inicia Busqueda del empleado: " + idEmployee);
+		Integer idRole = request.getIdRole();
+		log.info("Inicia creación del role con id: " + idRole);
 		try {
 			int databaseResponse = this.roleRepository.save(request);
 			if(databaseResponse != 1) {
 				response.setFailQuery();
-				response.setMessage("Información no encontrada");
+				response.setMessage("No se pudo insertar la información");
 			}else {
 				response.setSuccesQuery(request);
-				response.setMessage("Empleado registrado en el sistema");
+				response.setMessage("Role registrado en el sistema");
 			}
 		}catch(Exception e) {
-			log.error("Error buscando al empleado:" + idEmployee + " en el sistema");
+			log.error("Error del sistema a la hora de crear el role: " + idRole);
 			log.error(e.toString());
 			response.setFailService();
 		}
+		log.info("Response: "+response.toString());
 		return response;
 	}
-	
 }
