@@ -8,66 +8,36 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.udistrital.sports.unit.entity.EmployeeEntity;
-
-import lombok.extern.log4j.Log4j2;
+import com.udistrital.sports.unit.model.EmployeeModel;
 
 @Repository
-@Log4j2
-public class EmployeeRepository implements DatabaseRepository<EmployeeEntity, Integer> {
-	
-	 @Autowired
-	 private JdbcTemplate jdbcTemplate;
+public class EmployeeRepository implements DatabaseRepository<EmployeeModel, Integer> {
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public int save(EmployeeEntity data) {
-		log.info("Insertando Informacion del empleado",data.toString());
+	public int save(EmployeeModel data) {
+		return this.jdbcTemplate.update("INSERT INTO EMPLOYEE (IDUSER, IDROLE) VALUES(?,?)",
+				new Object[] { data.getIdUser(), data.getIdRole() });
+	}
+
+	@Override
+	public int update(EmployeeModel data) {
 		return this.jdbcTemplate.update(
-			"INSERT INTO EMPLOYEE (IDUSER, IDROLE) VALUES(?,?)",
-		    new Object[] {data.getIdUser(),data.getIdRole()}
+				"UPDATE EMPLOYEE SET IDROLE=?, WHERE IDUSER=?",
+				new Object[] { data.getIdRole(), data.getIdUser() }
 		);
 	}
 
 	@Override
-	public int update(EmployeeEntity data) {
-		log.info("Actualizando Informacion del empleado",data.toString());
-		return this.jdbcTemplate.update(
-			"UPDATE EMPLOYEE SET IDROLE=?, WHERE IDUSER=?",
-			new Object[] {data.getIdUser(),data.getIdRole()}
-		);
+	public EmployeeModel findById(Integer id) throws IncorrectResultSizeDataAccessException {
+		return this.jdbcTemplate.queryForObject("SELECT * FROM EMPLOYEE WHERE IDUSER=?",
+				BeanPropertyRowMapper.newInstance(EmployeeModel.class), id);
 	}
 
 	@Override
-	public EmployeeEntity findById(Integer id) {
-		try {
-			log.info("Buscando Informacion del empleado",id);
-			return this.jdbcTemplate.queryForObject(
-				"SELECT * FROM EMPLOYEE WHERE id=?",
-		         BeanPropertyRowMapper.newInstance(EmployeeEntity.class), 
-		         id
-			);
-		} catch (IncorrectResultSizeDataAccessException e) {
-			  log.error("Error buscando Informacion del empleado",id);
-			  log.error(e.toString());
-		      return null;
-		}
-	}
-
-	@Override
-	public int deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<EmployeeEntity> findAll() {
-		try {
-			return jdbcTemplate.query(
-				"SELECT * from EMPLOYEE", 
-				BeanPropertyRowMapper.newInstance(EmployeeEntity.class)
-			);
-		} catch (IncorrectResultSizeDataAccessException e) {
-		      return null;
-		}
+	public List<EmployeeModel> findAll() throws IncorrectResultSizeDataAccessException {
+		return jdbcTemplate.query("SELECT * FROM \"TEST\".\"EMPLOYEE\"", BeanPropertyRowMapper.newInstance(EmployeeModel.class));
 	}
 }

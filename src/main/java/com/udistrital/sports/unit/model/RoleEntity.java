@@ -1,4 +1,4 @@
-package com.udistrital.sports.unit.entity;
+package com.udistrital.sports.unit.model;
 
 import lombok.Data;
 

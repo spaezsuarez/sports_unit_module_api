@@ -1,11 +1,11 @@
-package com.udistrital.sports.unit.entity;
+package com.udistrital.sports.unit.model;
 
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @ToString
-public class EmployeeEntity{
+public class EmployeeModel{
 	
 	private Integer idUser;
 	private Integer idRole;
