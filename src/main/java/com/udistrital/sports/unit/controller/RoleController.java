@@ -11,13 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udistrital.sports.unit.dto.APIResponseDTO;
-import com.udistrital.sports.unit.dto.role.ConsultRoleDataRequestDTO;
 import com.udistrital.sports.unit.model.RoleModel;
 import com.udistrital.sports.unit.service.RoleService;
 import com.udistrital.sports.unit.util.Util;
@@ -30,7 +30,7 @@ public class RoleController {
 	@Autowired
 	private RoleService RoleService;
 	
-	@GetMapping(value="/all",produces = {"application/json"})
+	@GetMapping(value="/",produces = {"application/json"})
 	public ResponseEntity<List<RoleModel>> getAllRolees(){
 		APIResponseDTO<List<RoleModel>> response = new APIResponseDTO<>();
 		response = RoleService.getRoles();
@@ -41,16 +41,10 @@ public class RoleController {
                  .body(response.getData());
 	}
 	
-	@GetMapping(value="/get",produces = {"application/json"})
-	public ResponseEntity<RoleModel> getRole(
-			@Valid @RequestBody ConsultRoleDataRequestDTO request,
-			BindingResult result){
+	@GetMapping(value="/{idRole}",produces = {"application/json"})
+	public ResponseEntity<RoleModel> getRole(@PathVariable("idRole") Integer idRole){
 		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
-		if(result.hasErrors()) {
-			response.setFailRequest();
-			return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
-		}
-		response = RoleService.getRole(request);
+		response = RoleService.getRole(idRole);
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 

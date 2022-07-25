@@ -1,7 +1,6 @@
 package com.udistrital.sports.unit.repository;
 
 import com.udistrital.sports.unit.model.RoleModel;
-import com.udistrital.sports.unit.model.RoleModel;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
