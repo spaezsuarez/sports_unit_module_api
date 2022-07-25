@@ -5,8 +5,10 @@ import java.io.Serializable;
 import com.udistrital.sports.unit.util.Constants;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString
 public class APIResponseDTO<T> implements Serializable{
 	
 	private boolean state = false;

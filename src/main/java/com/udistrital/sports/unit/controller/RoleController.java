@@ -17,23 +17,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udistrital.sports.unit.dto.APIResponseDTO;
-import com.udistrital.sports.unit.dto.employee.ConsultEmployeeDataRequestDTO;
-import com.udistrital.sports.unit.model.EmployeeModel;
-import com.udistrital.sports.unit.service.EmployeeService;
+import com.udistrital.sports.unit.dto.role.ConsultRoleDataRequestDTO;
+import com.udistrital.sports.unit.model.RoleModel;
+import com.udistrital.sports.unit.service.RoleService;
 import com.udistrital.sports.unit.util.Util;
 
 @RestController
-@RequestMapping(value = "/employee")
+@RequestMapping(value = "/role")
 @CrossOrigin("*")
-public class EmployeeController {
+public class RoleController {
 	
 	@Autowired
-	private EmployeeService employeeService;
+	private RoleService RoleService;
 	
 	@GetMapping(value="/all",produces = {"application/json"})
-	public ResponseEntity<List<EmployeeModel>> getAllUsers(){
-		APIResponseDTO<List<EmployeeModel>> response = new APIResponseDTO<>();
-		response = employeeService.getEmployees();
+	public ResponseEntity<List<RoleModel>> getAllRolees(){
+		APIResponseDTO<List<RoleModel>> response = new APIResponseDTO<>();
+		response = RoleService.getRoles();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("X-Total-Count", String.valueOf((Objects.nonNull(response.getData()))?response.getData().size():0));
 		return ResponseEntity.ok()
@@ -42,28 +42,28 @@ public class EmployeeController {
 	}
 	
 	@GetMapping(value="/get",produces = {"application/json"})
-	public ResponseEntity<EmployeeModel> getUser(
-			@Valid @RequestBody ConsultEmployeeDataRequestDTO request,
+	public ResponseEntity<RoleModel> getRole(
+			@Valid @RequestBody ConsultRoleDataRequestDTO request,
 			BindingResult result){
-		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
+		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
 		if(result.hasErrors()) {
 			response.setFailRequest();
 			return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 		}
-		response = employeeService.getEmployee(request);
+		response = RoleService.getRole(request);
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 
 	@PostMapping(value="/register",produces = {"application/json"})
-	public ResponseEntity<EmployeeModel> registerUser(
-			@Valid @RequestBody EmployeeModel request,
+	public ResponseEntity<RoleModel> registerRole(
+			@Valid @RequestBody RoleModel request,
 			BindingResult result){
-		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
+		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
 		if(result.hasErrors()) {
 			response.setFailRequest();
 			return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 		}
-		response = employeeService.registerEmployee(request);
+		response = RoleService.registerRole(request);
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 

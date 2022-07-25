@@ -18,26 +18,26 @@ public class EmployeeRepository implements DatabaseRepository<EmployeeModel, Int
 
 	@Override
 	public int save(EmployeeModel data) {
-		return this.jdbcTemplate.update("INSERT INTO EMPLOYEE (IDUSER, IDROLE) VALUES(?,?)",
+		return this.jdbcTemplate.update("INSERT INTO \"SPORTSUNIT\".\"EMPLOYEE\" (IDUSER, IDROLE) VALUES(?,?)",
 				new Object[] { data.getIdUser(), data.getIdRole() });
 	}
 
 	@Override
 	public int update(EmployeeModel data) {
 		return this.jdbcTemplate.update(
-				"UPDATE EMPLOYEE SET IDROLE=?, WHERE IDUSER=?",
+				"UPDATE \"SPORTSUNIT\".\"EMPLOYEE\" SET IDROLE=?, WHERE IDUSER=?",
 				new Object[] { data.getIdRole(), data.getIdUser() }
 		);
 	}
 
 	@Override
 	public EmployeeModel findById(Integer id) throws IncorrectResultSizeDataAccessException {
-		return this.jdbcTemplate.queryForObject("SELECT * FROM EMPLOYEE WHERE IDUSER=?",
+		return this.jdbcTemplate.queryForObject("SELECT * FROM \"SPORTSUNIT\".\"EMPLOYEE\" WHERE IDUSER=?",
 				BeanPropertyRowMapper.newInstance(EmployeeModel.class), id);
 	}
 
 	@Override
 	public List<EmployeeModel> findAll() throws IncorrectResultSizeDataAccessException {
-		return jdbcTemplate.query("SELECT * FROM \"TEST\".\"EMPLOYEE\"", BeanPropertyRowMapper.newInstance(EmployeeModel.class));
+		return jdbcTemplate.query("SELECT * FROM \"SPORTSUNIT\".\"EMPLOYEE\"", BeanPropertyRowMapper.newInstance(EmployeeModel.class));
 	}
 }

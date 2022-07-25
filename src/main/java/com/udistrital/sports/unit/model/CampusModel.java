@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class CampusEntity {
+public class CampusModel {
 	
 	private Integer idCampus;
 	private String nameCampus;

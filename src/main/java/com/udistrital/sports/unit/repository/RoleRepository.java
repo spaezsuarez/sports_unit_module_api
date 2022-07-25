@@ -1,6 +1,7 @@
 package com.udistrital.sports.unit.repository;
 
-import com.udistrital.sports.unit.model.CampusModel;
+import com.udistrital.sports.unit.model.RoleModel;
+import com.udistrital.sports.unit.model.RoleModel;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,36 +14,36 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class CampusRepository implements DatabaseRepository<CampusModel, Integer>{
+public class RoleRepository implements DatabaseRepository<RoleModel, Integer>{
 	
 	 @Autowired
 	 private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public int save(CampusModel data) {
-		log.info("Insertando Informacion de la facultaa",data.toString());
+	public int save(RoleModel data) {
+		log.info("Insertando Informacion del rol",data.toString());
 		return this.jdbcTemplate.update(
-			"INSERT INTO \"SPORTSUNIT\".\"CAMPUS\" (IDCAMPUS, NAMECAMPUS, DIRECTIONCAMPUS) VALUES(?,?,?)",
-		    new Object[] {data.getIdCampus(),data.getNameCampus(),data.getDirectionCampus()}
+			"INSERT INTO \"SPORTSUNIT\".\"ROLE\" (IDROLE, NAMEROLE) VALUES(?,?)",
+		    new Object[] {data.getIdRole(),data.getNameRole()}
 		);
 	}
 
 	@Override
-	public int update(CampusModel data) {
-		log.info("Actualizando informacion para la facultad",data.toString());
+	public int update(RoleModel data) {
+		log.info("Actualizando informacion para el rol",data.toString());
 		return this.jdbcTemplate.update(
-			"UPDATE \"SPORTSUNIT\".\"CAMPUS\" SET NAMECAMPUS=?,DIRECTIONCAMPUS=? WHERE IDCAMPUS=?",
-			new Object[] {data.getNameCampus(),data.getDirectionCampus(),data.getIdCampus()}
+			"UPDATE \"SPORTSUNIT\".\"ROLE\" SET NAMEROLE=? WHERE IDROLE=?",
+			new Object[] {data.getNameRole(),data.getIdRole()}
 		);
 	}
 
 	@Override
-	public CampusModel findById(Integer id) {
+	public RoleModel findById(Integer id) {
 		try {
 			log.info("Buscando Informacion de la facultad",id);
 			return this.jdbcTemplate.queryForObject(
-				"SELECT * FROM \"SPORTSUNIT\".\"CAMPUS\" WHERE IDCAMPUS=?",
-		         BeanPropertyRowMapper.newInstance(CampusModel.class), 
+				"SELECT * FROM \"SPORTSUNIT\".\"ROLE\" WHERE IDROLE=?",
+		         BeanPropertyRowMapper.newInstance(RoleModel.class), 
 		         id
 			);
 		} catch (IncorrectResultSizeDataAccessException e) {
@@ -54,11 +55,11 @@ public class CampusRepository implements DatabaseRepository<CampusModel, Integer
 
 
 	@Override
-	public List<CampusModel> findAll() {
+	public List<RoleModel> findAll() {
 		try {
 			return jdbcTemplate.query(
-				"SELECT * from \"SPORTSUNIT\".\"CAMPUS\"", 
-				BeanPropertyRowMapper.newInstance(CampusModel.class)
+				"SELECT * from \"SPORTSUNIT\".\"ROLE\"", 
+				BeanPropertyRowMapper.newInstance(RoleModel.class)
 			);
 		} catch (IncorrectResultSizeDataAccessException e) {
 		      return null;

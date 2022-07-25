@@ -7,26 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.udistrital.sports.unit.dto.APIResponseDTO;
-import com.udistrital.sports.unit.dto.employee.ConsultEmployeeDataRequestDTO;
-import com.udistrital.sports.unit.model.EmployeeModel;
-import com.udistrital.sports.unit.repository.EmployeeRepository;
-import com.udistrital.sports.unit.service.EmployeeService;
+import com.udistrital.sports.unit.dto.role.ConsultRoleDataRequestDTO;
+import com.udistrital.sports.unit.model.RoleModel;
+import com.udistrital.sports.unit.repository.RoleRepository;
+import com.udistrital.sports.unit.service.RoleService;
 
 import lombok.extern.log4j.Log4j2;
 
 @Service
 @Log4j2
-public class EmployeeServiceImpl implements EmployeeService {
+public class RoleServiceImpl implements RoleService {
 
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private RoleRepository roleRepository;
 
 	@Override
-	public APIResponseDTO<List<EmployeeModel>> getEmployees() {
-		APIResponseDTO<List<EmployeeModel>> response = new APIResponseDTO<>();
-		log.info("Inicia Busqueda de empleados en el sistema");
+	public APIResponseDTO<List<RoleModel>> getRoles() {
+		APIResponseDTO<List<RoleModel>> response = new APIResponseDTO<>();
+		log.info("Inicia Busqueda de roles en el sistema");
 		try {
-			List<EmployeeModel> data = this.employeeRepository.findAll();
+			List<RoleModel> data = this.roleRepository.findAll();
 			if(Objects.nonNull(data)) {
 				log.info("Informacion encontrada");
 				response.setSuccesQuery(data);
@@ -35,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				response.setFailQuery();
 			}
 		}catch(Exception e) {
-			log.error("Error listando todos los empleados del sistema");
+			log.error("Error listando todos los roles del sistema");
 			log.error(e.toString());
 			response.setFailService();
 		}
@@ -43,12 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public APIResponseDTO<EmployeeModel> getEmployee(ConsultEmployeeDataRequestDTO request) {
-		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
-		Integer idEmployee = request.getIdUser();
+	public APIResponseDTO<RoleModel> getRole(ConsultRoleDataRequestDTO request) {
+		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
+		Integer idEmployee = request.getIdRole();
 		log.info("Inicia Busqueda del empleado: " + idEmployee);
 		try {
-			EmployeeModel data = this.employeeRepository.findById(idEmployee);
+			RoleModel data = this.roleRepository.findById(idEmployee);
 			if(Objects.nonNull(data)) {
 				response.setSuccesQuery(data);
 			}else {
@@ -63,12 +63,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public APIResponseDTO<EmployeeModel> registerEmployee(EmployeeModel request) {
-		APIResponseDTO<EmployeeModel> response = new APIResponseDTO<>();
-		Integer idEmployee = request.getIdUser();
+	public APIResponseDTO<RoleModel> registerRole(RoleModel request) {
+		APIResponseDTO<RoleModel> response = new APIResponseDTO<>();
+		Integer idEmployee = request.getIdRole();
 		log.info("Inicia Busqueda del empleado: " + idEmployee);
 		try {
-			int databaseResponse = this.employeeRepository.save(request);
+			int databaseResponse = this.roleRepository.save(request);
 			if(databaseResponse != 1) {
 				response.setFailQuery();
 				response.setMessage("Información no encontrada");
@@ -81,9 +81,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			log.error(e.toString());
 			response.setFailService();
 		}
-
-		log.info(response.toString());
-
 		return response;
 	}
 	
