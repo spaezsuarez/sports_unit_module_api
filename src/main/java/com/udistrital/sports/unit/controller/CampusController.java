@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udistrital.sports.unit.dto.APIResponseDTO;
-import com.udistrital.sports.unit.dto.campus.ConsultCampusDataRequestDTO;
 import com.udistrital.sports.unit.model.CampusModel;
 import com.udistrital.sports.unit.service.CampusService;
 import com.udistrital.sports.unit.util.Util;
@@ -36,6 +35,7 @@ public class CampusController {
 		APIResponseDTO<List<CampusModel>> response = new APIResponseDTO<>();
 		response = campusService.getCampuses();
 		HttpHeaders headers = new HttpHeaders();
+		headers.add("Access-Control-Expose-Headers", "X-Total-Count");
 		headers.add("X-Total-Count", String.valueOf((Objects.nonNull(response.getData()))?response.getData().size():0));
 		return ResponseEntity.ok()
                  .headers(headers)
