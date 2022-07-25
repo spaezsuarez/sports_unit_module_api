@@ -35,7 +35,6 @@ public class CampusController {
 		APIResponseDTO<List<CampusModel>> response = new APIResponseDTO<>();
 		response = campusService.getCampuses();
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Access-Control-Expose-Headers", "X-Total-Count");
 		headers.add("X-Total-Count", String.valueOf((Objects.nonNull(response.getData()))?response.getData().size():0));
 		return ResponseEntity.ok()
                  .headers(headers)
