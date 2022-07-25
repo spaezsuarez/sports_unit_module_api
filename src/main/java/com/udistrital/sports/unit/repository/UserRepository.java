@@ -31,6 +31,14 @@ public class UserRepository implements DatabaseRepository<UserModel,Integer> {
     }
 
     @Override
+	public int delete(Integer id) {
+		return this.jdbcTemplate.update(
+			"DELETE FROM \"SPORTSUNIT\".\"USER\" WHERE IDUSER=?",
+			new Object[] {id}
+		);
+	}
+
+    @Override
     public UserModel findById(Integer id) throws IncorrectResultSizeDataAccessException {
         return this.jdbcTemplate.queryForObject("SELECT * FROM \"SPORTSUNIT\".\"USER\" WHERE IDUSER=?",
 				BeanPropertyRowMapper.newInstance(UserModel.class), id);

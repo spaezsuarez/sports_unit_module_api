@@ -31,7 +31,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	@GetMapping(value="/",produces = {"application/json"})
+	@GetMapping(value="",produces = {"application/json"})
 	public ResponseEntity<List<EmployeeDTO>> getAllUsers(){
 		APIResponseDTO<List<EmployeeDTO>> response = new APIResponseDTO<>();
 		response = employeeService.getEmployees();
@@ -49,7 +49,7 @@ public class EmployeeController {
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 
-	@PostMapping(value="/",consumes = {"application/json"},produces = {"application/json"})
+	@PostMapping(value="",consumes = {"application/json"},produces = {"application/json"})
 	public ResponseEntity<EmployeeModel> registerUser(
 			@Valid @RequestBody EmployeeDTO request,
 			BindingResult result){

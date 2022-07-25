@@ -30,7 +30,7 @@ public class CampusController {
 	@Autowired
 	private CampusService campusService;
 	
-	@GetMapping(value="/",produces = {"application/json"})
+	@GetMapping(value="",produces = {"application/json"})
 	public ResponseEntity<List<CampusModel>> getAllCampuses(){
 		APIResponseDTO<List<CampusModel>> response = new APIResponseDTO<>();
 		response = campusService.getCampuses();
@@ -50,7 +50,7 @@ public class CampusController {
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 
-	@PostMapping(value="/",consumes={"application/json"},produces = {"application/json"})
+	@PostMapping(value="",consumes={"application/json"},produces = {"application/json"})
 	public ResponseEntity<CampusModel> registerCampus(
 			@Valid @RequestBody CampusModel request,
 			BindingResult result){

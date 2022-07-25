@@ -37,6 +37,15 @@ public class CampusRepository implements DatabaseRepository<CampusModel, Integer
 	}
 
 	@Override
+	public int delete(Integer id) {
+		log.info("Eliminando informacion de la facultad",id);
+		return this.jdbcTemplate.update(
+			"DELETE FROM \"SPORTSUNIT\".\"CAMPUS\" WHERE IDCAMPUS=?",
+			new Object[] {id}
+		);
+	}
+
+	@Override
 	public CampusModel findById(Integer id) {
 		try {
 			log.info("Buscando Informacion de la facultad",id);

@@ -41,7 +41,7 @@ public class Util {
 			break;
 
 		default:
-			httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
+			httpStatus = HttpStatus.OK;
 			break;
 		}
 		return httpStatus;

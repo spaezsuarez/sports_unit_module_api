@@ -19,7 +19,7 @@ public class AddHeadersFilter implements Filter {
             FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setHeader(
-                "Access-Control-Expose-Header", "X-Total-Count");
+                "Access-Control-Expose-Headers", "X-Total-Count");
 
         chain.doFilter(request, response);
     }

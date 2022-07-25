@@ -108,7 +108,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				response.setMessage("No se pudo crear el empleado");
 			}else {
 				log.info("Empleado creado exitosamente");
-				response.setSuccesQuery();
+				response.setSuccesQuery(dataEmployee);
 				response.setMessage("Empleado registrado en el sistema");
 			}
 		}catch(Exception e) {

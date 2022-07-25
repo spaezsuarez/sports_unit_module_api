@@ -31,6 +31,14 @@ public class EmployeeRepository implements DatabaseRepository<EmployeeModel, Int
 	}
 
 	@Override
+	public int delete(Integer id) {
+		return this.jdbcTemplate.update(
+			"DELETE FROM \"SPORTSUNIT\".\"EMPLOYEE\" WHERE IDUSER=?",
+			new Object[] {id}
+		);
+	}
+
+	@Override
 	public EmployeeModel findById(Integer id) throws IncorrectResultSizeDataAccessException {
 		return this.jdbcTemplate.queryForObject("SELECT * FROM \"SPORTSUNIT\".\"EMPLOYEE\" WHERE IDUSER=?",
 				BeanPropertyRowMapper.newInstance(EmployeeModel.class), id);

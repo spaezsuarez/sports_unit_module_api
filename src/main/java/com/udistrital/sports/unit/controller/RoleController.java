@@ -30,7 +30,7 @@ public class RoleController {
 	@Autowired
 	private RoleService RoleService;
 	
-	@GetMapping(value="/",produces = {"application/json"})
+	@GetMapping(value="",produces = {"application/json"})
 	public ResponseEntity<List<RoleModel>> getAllRolees(){
 		APIResponseDTO<List<RoleModel>> response = new APIResponseDTO<>();
 		response = RoleService.getRoles();
@@ -48,7 +48,7 @@ public class RoleController {
 		return new ResponseEntity<>(response.getData(),Util.findHttpStatusResponse(response));
 	}
 
-	@PostMapping(value="/register",produces = {"application/json"})
+	@PostMapping(value="",produces = {"application/json"})
 	public ResponseEntity<RoleModel> registerRole(
 			@Valid @RequestBody RoleModel request,
 			BindingResult result){

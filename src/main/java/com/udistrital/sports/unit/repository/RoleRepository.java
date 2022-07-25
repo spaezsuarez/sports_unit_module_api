@@ -37,6 +37,15 @@ public class RoleRepository implements DatabaseRepository<RoleModel, Integer>{
 	}
 
 	@Override
+	public int delete(Integer id) {
+		log.info("Eliminando informacion sobre el rol",id);
+		return this.jdbcTemplate.update(
+			"DELETE FROM \"SPORTSUNIT\".\"ROLE\" WHERE IDROLE=?",
+			new Object[] {id}
+		);
+	}
+
+	@Override
 	public RoleModel findById(Integer id) {
 		try {
 			log.info("Buscando Informacion de la facultad",id);
