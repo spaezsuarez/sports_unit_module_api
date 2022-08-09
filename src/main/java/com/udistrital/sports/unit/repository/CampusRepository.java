@@ -20,42 +20,41 @@ public class CampusRepository implements DatabaseRepository<CampusModel, Integer
 
 	@Override
 	public int save(CampusModel data) {
-		log.info("Insertando Informacion de la facultaa",data.toString());
+		log.info("Insertando Informacion de la facultad: "+data.toString());
 		return this.jdbcTemplate.update(
-			"INSERT INTO \"SPORTSUNIT\".\"CAMPUS\" (IDCAMPUS, NAMECAMPUS, DIRECTIONCAMPUS) VALUES(?,?,?)",
-		    new Object[] {data.getIdCampus(),data.getNameCampus(),data.getDirectionCampus()}
+			"INSERT INTO \"SPORTSUNIT\".\"CAMPUS\" (IDCAMPUS, NAMECAMPUS, DIRECTIONCAMPUS) VALUES(?,?,?)",data.getIdCampus(),data.getNameCampus(),data.getDirectionCampus()
 		);
 	}
 
 	@Override
 	public int update(CampusModel data) {
-		log.info("Actualizando informacion para la facultad",data.toString());
+		log.info("Actualizando informacion para la facultad: "+data.toString());
 		return this.jdbcTemplate.update(
 			"UPDATE \"SPORTSUNIT\".\"CAMPUS\" SET NAMECAMPUS=?,DIRECTIONCAMPUS=? WHERE IDCAMPUS=?",
-			new Object[] {data.getNameCampus(),data.getDirectionCampus(),data.getIdCampus()}
+			data.getNameCampus(),data.getDirectionCampus(),data.getIdCampus()
 		);
 	}
 
 	@Override
 	public int delete(Integer id) {
-		log.info("Eliminando informacion de la facultad",id);
+		log.info("Eliminando informacion de la facultad: " + id);
 		return this.jdbcTemplate.update(
 			"DELETE FROM \"SPORTSUNIT\".\"CAMPUS\" WHERE IDCAMPUS=?",
-			new Object[] {id}
+			id
 		);
 	}
 
 	@Override
 	public CampusModel findById(Integer id) {
 		try {
-			log.info("Buscando Informacion de la facultad",id);
+			log.info("Buscando Informacion de la facultad: " + id);
 			return this.jdbcTemplate.queryForObject(
 				"SELECT * FROM \"SPORTSUNIT\".\"CAMPUS\" WHERE IDCAMPUS=?",
-		         BeanPropertyRowMapper.newInstance(CampusModel.class), 
+		         BeanPropertyRowMapper.newInstance(CampusModel.class),
 		         id
 			);
 		} catch (IncorrectResultSizeDataAccessException e) {
-			  log.error("Error buscando Informacion del empleado",id);
+			  log.error("Error buscando Informacion del empleado: " + id);
 			  log.error(e.toString());
 		      return null;
 		}
@@ -73,6 +72,4 @@ public class CampusRepository implements DatabaseRepository<CampusModel, Integer
 		      return null;
 		}
 	}
-	
-
 }

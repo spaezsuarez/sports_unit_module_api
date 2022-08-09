@@ -18,24 +18,18 @@ public class EmployeeRepository implements DatabaseRepository<EmployeeModel, Int
 
 	@Override
 	public int save(EmployeeModel data) {
-		return this.jdbcTemplate.update("INSERT INTO \"SPORTSUNIT\".\"EMPLOYEE\" (IDUSER, IDROLE) VALUES(?,?)",
-				new Object[] { data.getIdUser(), data.getIdRole() });
+		return this.jdbcTemplate.update("INSERT INTO \"SPORTSUNIT\".\"EMPLOYEE\" (IDUSER, IDROLE) VALUES(?,?)",data.getIdUser(), data.getIdRole());
 	}
 
 	@Override
 	public int update(EmployeeModel data) {
-		return this.jdbcTemplate.update(
-				"UPDATE \"SPORTSUNIT\".\"EMPLOYEE\" SET IDROLE=? WHERE IDUSER=?",
-				new Object[] { data.getIdRole(), data.getIdUser() }
-		);
+		return this.jdbcTemplate.update("UPDATE \"SPORTSUNIT\".\"EMPLOYEE\" SET IDROLE=? WHERE IDUSER=?", data.getIdRole(), data.getIdUser());
 	}
 
 	@Override
 	public int delete(Integer id) {
 		return this.jdbcTemplate.update(
-			"DELETE FROM \"SPORTSUNIT\".\"EMPLOYEE\" WHERE IDUSER=?",
-			new Object[] {id}
-		);
+			"DELETE FROM \"SPORTSUNIT\".\"EMPLOYEE\" WHERE IDUSER=?", id);
 	}
 
 	@Override

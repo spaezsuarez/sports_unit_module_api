@@ -20,42 +20,38 @@ public class RoleRepository implements DatabaseRepository<RoleModel, Integer>{
 
 	@Override
 	public int save(RoleModel data) {
-		log.info("Insertando Informacion del rol",data.toString());
+		log.info("Insertando Informacion del rol: "+ data.toString());
 		return this.jdbcTemplate.update(
-			"INSERT INTO \"SPORTSUNIT\".\"ROLE\" (IDROLE, NAMEROLE) VALUES(?,?)",
-		    new Object[] {data.getIdRole(),data.getNameRole()}
-		);
+			"INSERT INTO \"SPORTSUNIT\".\"ROLE\" (IDROLE, NAMEROLE) VALUES(?,?)", data.getIdRole(),data.getNameRole());
 	}
 
 	@Override
 	public int update(RoleModel data) {
-		log.info("Actualizando informacion para el rol",data.toString());
+		log.info("Actualizando informacion para el rol: " + data.toString());
 		return this.jdbcTemplate.update(
-			"UPDATE \"SPORTSUNIT\".\"ROLE\" SET NAMEROLE=? WHERE IDROLE=?",
-			new Object[] {data.getNameRole(),data.getIdRole()}
+			"UPDATE \"SPORTSUNIT\".\"ROLE\" SET NAMEROLE=? WHERE IDROLE=?",data.getNameRole(),data.getIdRole()
 		);
 	}
 
 	@Override
 	public int delete(Integer id) {
-		log.info("Eliminando informacion sobre el rol",id);
+		log.info("Eliminando informacion sobre el rol: " + id);
 		return this.jdbcTemplate.update(
-			"DELETE FROM \"SPORTSUNIT\".\"ROLE\" WHERE IDROLE=?",
-			new Object[] {id}
+			"DELETE FROM \"SPORTSUNIT\".\"ROLE\" WHERE IDROLE=?", id
 		);
 	}
 
 	@Override
 	public RoleModel findById(Integer id) {
 		try {
-			log.info("Buscando Informacion de la facultad",id);
+			log.info("Buscando Informacion de la facultad: " + id);
 			return this.jdbcTemplate.queryForObject(
 				"SELECT * FROM \"SPORTSUNIT\".\"ROLE\" WHERE IDROLE=?",
 		         BeanPropertyRowMapper.newInstance(RoleModel.class), 
 		         id
 			);
 		} catch (IncorrectResultSizeDataAccessException e) {
-			  log.error("Error buscando Informacion del empleado",id);
+			  log.error("Error buscando Informacion del empleado: "+id);
 			  log.error(e.toString());
 		      return null;
 		}

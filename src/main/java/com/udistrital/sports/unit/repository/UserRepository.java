@@ -18,15 +18,13 @@ public class UserRepository implements DatabaseRepository<UserModel,Integer> {
 
     @Override
     public int save(UserModel data) {
-        return this.jdbcTemplate.update("INSERT INTO \"SPORTSUNIT\".\"USER\" (IDUSER,IDCAMPUS,NAMEUSER) VALUES(?,?,?)",
-				new Object[] { data.getIdUser(), data.getIdCampus(),data.getNameUser() });
+        return this.jdbcTemplate.update("INSERT INTO \"SPORTSUNIT\".\"USER\" (IDUSER,IDCAMPUS,NAMEUSER) VALUES(?,?,?)", data.getIdUser(), data.getIdCampus(),data.getNameUser());
     }
 
     @Override
     public int update(UserModel data) {
         return this.jdbcTemplate.update(
-				"UPDATE \"SPORTSUNIT\".\"USER\" SET IDCAMPUS=?, NAMEUSER=? WHERE IDUSER=?",
-				new Object[] { data.getIdCampus(),data.getNameUser(), data.getIdUser() }
+				"UPDATE \"SPORTSUNIT\".\"USER\" SET IDCAMPUS=?, NAMEUSER=? WHERE IDUSER=?",data.getIdCampus(),data.getNameUser(), data.getIdUser()
 		);
     }
 
@@ -34,7 +32,7 @@ public class UserRepository implements DatabaseRepository<UserModel,Integer> {
 	public int delete(Integer id) {
 		return this.jdbcTemplate.update(
 			"DELETE FROM \"SPORTSUNIT\".\"USER\" WHERE IDUSER=?",
-			new Object[] {id}
+			id
 		);
 	}
 
