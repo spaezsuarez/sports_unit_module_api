@@ -6,7 +6,8 @@ import lombok.Data;
 
 @Data
 public class LoginAuxiliarResponseDTO implements Serializable{
-		
+	
+	private String id;
 	private String employee;
 	private String campus;
 	private String charge;

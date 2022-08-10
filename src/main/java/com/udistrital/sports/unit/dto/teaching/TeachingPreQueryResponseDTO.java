@@ -5,9 +5,9 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class TeachingPreConsultResponseDTO implements Serializable {
+public class TeachingPreQueryResponseDTO implements Serializable {
 	
-	private String codeEmployee;
+	private String id;
 	private String employee;
 	private String campus;
 	private String charge;
