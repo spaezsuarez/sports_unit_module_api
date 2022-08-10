@@ -66,6 +66,15 @@ public class Constants {
 				+ "WHERE C.\"IDCARGO\" =  1 AND E.\"CODEMPLEADO\" = ?\n"
 				+ "ORDER BY EC.\"FECHACARGO\" DESC";
 		
+		public static final String TEACHING_PRE_REQUEST = "SELECT E.\"CODEMPLEADO\"  codeEmployee,E.\"NOMEMPLEADO\" || ' ' || E.\"APELLEMPLEADO\" employee,\n"
+				+ "S.\"NOMESPACIO\" campus,C.\"DESCARGO\" charge,EC.\"FECHACARGO\" dateCharge\n"
+				+ "FROM \"SPORTS_UNIT\".\"EMPLEADO\" E\n"
+				+ "INNER JOIN \"SPORTS_UNIT\".\"EMPLEADO_CARGO\" EC ON E.\"CODEMPLEADO\" = EC.\"CODEMPLEADO\"\n"
+				+ "INNER JOIN \"SPORTS_UNIT\".\"CARGO\" C ON EC.\"IDCARGO\" = C.\"IDCARGO\"\n"
+				+ "INNER JOIN \"SPORTS_UNIT\".\"ESPACIO\" S ON EC.\"CODESPACIO\" = S.\"CODESPACIO\"\n"
+				+ "WHERE E.\"CODEMPLEADO\" = (SELECT E.\"CODEMPLEADO\" FROM \"SPORTS_UNIT\".\"EMPLEADO\" E WHERE \n"
+				+ "LOWER(E.\"NOMEMPLEADO\" || ' ' || E.\"APELLEMPLEADO\") LIKE(LOWER(?))) AND C.\"IDCARGO\" = 2";
+		
 		private DatabaseOperations() {
 			
 		}
