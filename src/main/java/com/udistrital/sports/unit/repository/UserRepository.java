@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.udistrital.sports.unit.model.UserModel;
 
 @Repository
-public class UserRepository implements DatabaseRepository<UserModel,Integer> {
+public class UserRepository implements CrudRepository<UserModel,Integer> {
 
     @Autowired
 	private JdbcTemplate jdbcTemplate;

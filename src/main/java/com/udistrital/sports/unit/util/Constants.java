@@ -54,4 +54,21 @@ public class Constants {
 			return code;
 		}
 	}
+	
+	public static class DatabaseOperations{
+		
+		public static final String LOGIN_AUXILIAR = "SELECT E.\"NOMEMPLEADO\" || ' ' || E.\"APELLEMPLEADO\" employee,\n"
+				+ "S.\"NOMESPACIO\" campus,C.\"DESCARGO\" charge,TO_CHAR(EC.\"FECHACARGO\",'YYYY-MM-DD') dateCharge,\n"
+				+ "TO_CHAR(EC.\"FECHACARGO\",'HH24:MI') hourCharge FROM \"SPORTS_UNIT\".\"EMPLEADO\" E\n"
+				+ "INNER JOIN \"SPORTS_UNIT\".\"EMPLEADO_CARGO\" EC ON E.\"CODEMPLEADO\" = EC.\"CODEMPLEADO\"\n"
+				+ "INNER JOIN \"SPORTS_UNIT\".\"CARGO\" C ON EC.\"IDCARGO\" = C.\"IDCARGO\"\n"
+				+ "INNER JOIN \"SPORTS_UNIT\".\"ESPACIO\" S ON EC.\"CODESPACIO\" = S.\"CODESPACIO\"\n"
+				+ "WHERE C.\"IDCARGO\" =  1 AND E.\"CODEMPLEADO\" = ?\n"
+				+ "ORDER BY EC.\"FECHACARGO\" DESC";
+		
+		private DatabaseOperations() {
+			
+		}
+		
+	}
 }

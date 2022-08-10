@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class CampusRepository implements DatabaseRepository<CampusModel, Integer>{
+public class CampusRepository implements CrudRepository<CampusModel, Integer>{
 	
 	 @Autowired
 	 private JdbcTemplate jdbcTemplate;

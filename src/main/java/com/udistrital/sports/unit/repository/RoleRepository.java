@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 @Log4j2
-public class RoleRepository implements DatabaseRepository<RoleModel, Integer>{
+public class RoleRepository implements CrudRepository<RoleModel, Integer>{
 	
 	 @Autowired
 	 private JdbcTemplate jdbcTemplate;

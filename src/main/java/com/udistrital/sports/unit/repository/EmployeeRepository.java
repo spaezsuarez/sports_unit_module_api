@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.udistrital.sports.unit.model.EmployeeModel;
 
 @Repository
-public class EmployeeRepository implements DatabaseRepository<EmployeeModel, Integer> {
+public class EmployeeRepository implements CrudRepository<EmployeeModel, Integer> {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;

@@ -11,7 +11,10 @@ import lombok.Data;
 @Data
 public class EmployeeDTO implements Serializable {
 
-    @JsonProperty("id")
+
+	private static final long serialVersionUID = -4079375113310737602L;
+	
+	@JsonProperty("id")
     private Integer idUser;
     private Integer idCampus;
 	private String nameUser;
