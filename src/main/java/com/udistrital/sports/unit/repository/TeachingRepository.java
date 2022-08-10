@@ -41,8 +41,6 @@ public class TeachingRepository {
 	}
 	
 	public List<TeachingElementsQueryResponseDTO> consultElementsBySpace(String idSport,String spaceCode) {
-		log.info("IdSport: " + idSport);
-		log.info("spaceCode: " + spaceCode);
 		return this.jdbcTemplate.query(
 				DatabaseOperations.TEACHING_ELEMENTS_QUERY,
 				BeanPropertyRowMapper.newInstance(TeachingElementsQueryResponseDTO.class),
