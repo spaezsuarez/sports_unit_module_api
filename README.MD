@@ -15,6 +15,16 @@ La siguiente API tiene la configuración y consultas para el modulo de la unidad
 
 - La API se encuentra hecha en `Java` con el framework de `SpringBoot`
 
+### Dependencias
+
+ #### jdbc
+
+ Será nuestro intermedio entre las consultas e inserciones que deseamos realizar y el driver para conectar con la base de datos.
+
+ ![Utilización JDBC](JDBC.png)
+
+ ![Utilización JDBC](Consulta.png)
+
 <hr>
 
 ## Configuración Base de Datos de forma manual
@@ -35,8 +45,10 @@ máticamente el gestor de bases de datos y la estructura de las tablas, junto co
 Para desplegar el servicio de docker podemos usar dos comandos:
 
  - Como servicio
+        
         docker stack deploy -c docker-stack.yml oracle
  - Como un contenedor
+        
         docker-compose up -d
 
 <hr>
@@ -64,3 +76,17 @@ server.servlet.context-path=/api/ud/v1
 - La segunda propiedad (`spring.datasource.url`) se refiere a la url que se usa para que jdbc pueda conectarse a la base de datos.
 
 - La tercera propiedad (`spring.datasource.username`) se refiere al usuario configurado para su base de datos
+
+- La cuarta propiedad (`spring.datasource.password`) se utiliza para definir la contraseña del usuario a utilizar para conectar a la base de datos.
+
+- La quinta propiedad (`server.port`) define el puerto por el cual seran expuestos los servicios de la api.
+
+- La sexta propiedad (`server.servlet.context-path`) nos permite agregar un endpoint de contexto para los servicios de determinada versión, para nuestro caso utilizaremos por defecto /api/ud/v1.
+
+## Ejecución
+
+El comando que se utiliza para iniciar el api en spring tanto para windows, como para linux será (Asegurese de tener instalado maven):
+
+ ```
+ mvn spring-boot:run
+ ```
