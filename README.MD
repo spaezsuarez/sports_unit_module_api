@@ -2,14 +2,14 @@
 
 La siguiente API tiene la configuración y consultas para el modulo de la unidad deportiva.
 
-<hr>
+* * *
 
 ## Autores
 
 - Jesus Manuel Leiva Bermudez - 20191020132
 - Sergio David Paez Suarez - 20191020167
 
-<hr>
+* * *
 
 ## Tegnologías utilizadas
 
@@ -25,7 +25,7 @@ La siguiente API tiene la configuración y consultas para el modulo de la unidad
 
  ![Utilización JDBC](Consulta.png)
 
-<hr>
+* * *
 
 ## Configuración Base de Datos de forma manual
 
@@ -51,7 +51,8 @@ Para desplegar el servicio de docker podemos usar dos comandos:
         
         docker-compose up -d
 
-<hr>
+
+* * *
 
 ## Configuración del proyecto
 
